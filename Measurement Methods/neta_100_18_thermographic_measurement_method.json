@@ -1,0 +1,130 @@
+{
+  "overview": {
+    "name": "Thermographic Survey (NETA 100.18)",
+    "description": "Thermographic inspection of electrical components to identify abnormal heating, classified according to NETA Table 100.18 temperature-rise guidance."
+  },
+  "failure_modes": [
+    "Loose or high-resistance electrical connections",
+    "Overloaded conductors or components",
+    "Phase imbalance",
+    "Degraded contacts or corrosion"
+  ],
+  "inputs": {
+    "tools_to_use": [
+      "Thermal camera"
+    ],
+    "expected_measurements": [
+      {
+        "name": "component_temperature",
+        "type": "number",
+        "unit": "°C",
+        "description": "Surface temperature of the inspected electrical component"
+      },
+      {
+        "name": "reference_temperature",
+        "type": "number",
+        "unit": "°C",
+        "description": "Temperature of a comparable component under similar load or ambient air temperature"
+      },
+      {
+        "name": "comparison_method",
+        "type": "enum",
+        "values": [
+          "similar_component",
+          "ambient_air"
+        ],
+        "description": "Method used to determine temperature rise reference"
+      },
+      {
+        "name": "load_percent",
+        "type": "number",
+        "unit": "%",
+        "optional": true,
+        "description": "Estimated or measured load at time of inspection; used for contextual interpretation only"
+      }
+    ]
+  },
+  "processing": {
+    "input": [
+      "Capture thermal image of the inspected component",
+      "Measure component surface temperature",
+      "Measure reference temperature based on selected comparison method",
+      "Record electrical load percentage if available"
+    ],
+    "calculations": [
+      {
+        "name": "temperature_rise",
+        "formula": "component_temperature - reference_temperature",
+        "unit": "°C"
+      }
+    ],
+    "evaluation_logic": {
+      "notes": [
+        "Temperature rise is the primary severity driver per NETA 100.18.",
+        "Load percentage does not modify delta-T thresholds but provides context, since heating is strongly load-dependent."
+      ],
+      "similar_component": [
+        {
+          "range": "1–3",
+          "condition": "possible_deficiency",
+          "recommended_action": "Investigate"
+        },
+        {
+          "range": "4–15",
+          "condition": "probable_deficiency",
+          "recommended_action": "Repair as time permits"
+        },
+        {
+          "range": ">15",
+          "condition": "major_discrepancy",
+          "recommended_action": "Repair immediately"
+        }
+      ],
+      "ambient_air": [
+        {
+          "range": "1–10",
+          "condition": "possible_deficiency",
+          "recommended_action": "Investigate"
+        },
+        {
+          "range": "11–20",
+          "condition": "probable_deficiency",
+          "recommended_action": "Repair as time permits"
+        },
+        {
+          "range": "21–40",
+          "condition": "monitor",
+          "recommended_action": "Monitor until corrective measures can be accomplished"
+        },
+        {
+          "range": ">40",
+          "condition": "major_discrepancy",
+          "recommended_action": "Repair immediately"
+        }
+      ]
+    }
+  },
+  "outputs": {
+    "result": [
+      {
+        "name": "temperature_rise",
+        "unit": "°C"
+      },
+      {
+        "name": "condition_classification",
+        "type": "enum",
+        "values": [
+          "no_issue_observed",
+          "possible_deficiency",
+          "probable_deficiency",
+          "monitor",
+          "major_discrepancy"
+        ]
+      },
+      {
+        "name": "recommended_action",
+        "type": "string"
+      }
+    ]
+  }
+}
