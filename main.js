@@ -3,7 +3,8 @@ const FILES = [
   'MM-ACOUSTIC-LEAK-002.json',
   'MM-THERM-ELEC-003.json',
   'MM-BEARING-CORR-004.json',
-  'MM-STEAMTRAP-EFF-005.json',
+  'MM-STEAMTRAP-EFF-005.json'
+  'neta_100_18_thermographic_measurement_method.json',
 ];
 
 const BASE = 'Measurement Methods/';
