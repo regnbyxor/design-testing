@@ -3,12 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <title>Document</title>
+    <meta name="description" content="Measurement Methods viewer" />
+    <title>Measurement Methods</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Hello, World!</h1>
+    <div class="container">
+      <h1>Measurement Methods</h1>
+
+      <div class="controls">
+        <label for="mm-select">Select method:</label>
+        <select id="mm-select">
+          <option value="">-- choose a method --</option>
+        </select>
+      </div>
+
+      <div id="table-wrapper" hidden>
+        <table id="mm-table">
+          <tbody id="mm-tbody"></tbody>
+        </table>
+      </div>
+
+      <p id="placeholder" class="placeholder">Select a measurement method above to view its details.</p>
+    </div>
+
     <script src="main.js"></script>
   </body>
 </html>
